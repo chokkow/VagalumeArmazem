@@ -18,25 +18,23 @@ import java.util.Scanner;
 public class Service  {
 
     private static final String LOG_TAG = NetworkUtils.class.getSimpleName();
-    // Constantes utilizadas pela API
-    // URL para a API de Livros do Google.
 
-    // Parametros da string de Busca
+
+
     private static final String QUERY_PARAM = "q";
-    // Limitador da qtde de resultados
+
     private static final String MAX_RESULTS = "maxResults";
-    // Parametro do tipo de impressão
-    private static final String TIPO_IMPRESSAO = "printType";
+
     static String BuscaBandas(String queryString) {
 
-        String LIVROS_URL = "Https://api.vagalume.com.br/search.excerpt?apikey=660a4395f992ff67786584e238f501aa&q="+ queryString.replace(" ","%" + "")+"&limit=5";
-        Log.d("LOG_TAG", LIVROS_URL);
+        String Vag_url = "Https://api.vagalume.com.br/search.excerpt?apikey=660a4395f992ff67786584e238f501aa&q="+ queryString.replace(" ","%" + "")+"&limit=1";
+        Log.d("LOG_TAG", Vag_url);
         HttpURLConnection urlConnection = null;
-        BufferedReader reader = null;
-        String bookJSONString = null;
-        try {
+            BufferedReader reader = null;
+            String bandJSONstring = null;
+            try {
             // Construção da URI de Busca
-            Uri builtURI = Uri.parse(LIVROS_URL).buildUpon() .build();
+            Uri builtURI = Uri.parse(Vag_url).buildUpon() .build();
             // Converte a URI para a URL.
             URL requestURL = new URL(builtURI.toString());
             // Abre a conexão de rede
@@ -59,7 +57,7 @@ public class Service  {
                 // se o stream estiver vazio não faz nada
                 return null;
             }
-            bookJSONString = builder.toString();
+            bandJSONstring = builder.toString();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -76,8 +74,8 @@ public class Service  {
             }
         }
         // escreve o Json no log
-        Log.d("LOG_TAG", bookJSONString);
-        return bookJSONString;
+        Log.d("LOG_TAG", bandJSONstring);
+        return bandJSONstring;
     }
 }
 
@@ -85,4 +83,4 @@ public class Service  {
 
 
 
-    /////////////////////////////
+

@@ -79,7 +79,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
 
         String queryString = m.getText().toString();
-        NetworkInfo networkInfo = null;
 
         Bundle queryBundle = new Bundle();
         queryBundle.putString("queryString", queryString);
@@ -119,12 +118,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onLoadFinished(@NonNull Loader<String> loader, String data) {
         try {
-
+            DatabaseHelper dbh = new DatabaseHelper(getApplicationContext());
             JSONObject jsondata = new JSONObject(data);
             JSONObject jsonresponse = jsondata.getJSONObject("response");
             JSONArray jsondocs = jsonresponse.getJSONArray("docs");
             for (int i = 0; i < jsondocs.length(); i++) {
-                respostass.append(jsondocs.getJSONObject(i).getString("band") + "\n");
+                String banda = jsondocs.getJSONObject(i).getString("band");
+                respostass.append(banda + "\n");
+                dbh.insertContact(banda);
             }
             savebandas(respostass.getText().toString());
 
@@ -163,6 +164,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void consultarbanda(View v){
+        startActivity(new Intent(getApplicationContext(), Exibirbandassalvas.class));
     }
 
 }
